@@ -1,0 +1,28 @@
+{
+    "name": "tir/user",
+    "description": "The User manager for Tir framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tirdad Abbasi",
+            "email": "abbasi.tirdad@gmail.com"
+        }
+    ],
+    "require": {
+        "tir/crud": "dev-master"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Tir\\User\\": "src/"
+        }
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tir\\User\\UserServiceProvider"
+            ]
+        }
+    }
+}
