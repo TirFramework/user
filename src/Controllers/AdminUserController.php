@@ -1,10 +1,9 @@
 <?php
 
-namespace Tir\User\Http\Controllers;
+namespace Tir\User\Controllers;
 
 use Tir\User\Models\User;
-use Tir\Crud\Http\Controllers\CrudController;
-use Tir\Profile\Models\Profile;
+use Tir\Crud\Controllers\CrudController;
 
 class AdminUserController extends CrudController
 {
