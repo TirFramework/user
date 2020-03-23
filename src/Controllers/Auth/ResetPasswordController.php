@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\User\Http\Controllers\Auth;
+namespace Tir\User\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +26,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
         /**
      * Display the password reset view for the given token.

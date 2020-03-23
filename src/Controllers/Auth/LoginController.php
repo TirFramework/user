@@ -45,11 +45,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login()
-    {
-         Auth::attempt(['email' => 'admin@tir.local', 'password' => '12345678900']);
-    }
-
 
     /**
      * Attempt to log the user into the application.

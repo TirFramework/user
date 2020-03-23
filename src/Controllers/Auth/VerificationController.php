@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\User\Http\Controllers\Auth;
+namespace Tir\User\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use DB;
@@ -29,7 +29,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.

@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
         //Verification condition for verify with mobile or email
-        Route::Post('verification-by-mobile-or-email', 'Auth\VerificationController@verificationByMobileOrEmail')->name('verificationByMobileOrEmail');
+        Route::Post('verification-by-mobile-or-email', 'Tir\User\Controllers\Auth\VerificationController@verificationByMobileOrEmail')->name('verificationByMobileOrEmail');
 
         //show view for enter smscode
         Route::get('entercode', function () {
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
         })->name('entercode');
 
         //Verification sms code
-        Route::Post('verification-mobile', 'Auth\VerificationController@verificationCode')->name('verificationCode');
+        Route::Post('verification-mobile', 'Tir\User\Controllers\Auth\VerificationController@verificationCode')->name('verificationCode');
 
     });
 });

@@ -114,14 +114,6 @@ class User extends Authenticatable
                 'visible'   => 'ce',
             ],
             [
-                'name'      => 'roles',
-                'type'      => 'relationM',
-                'relation'  => 'roles',
-                'data'      => ['\Tir\Acl\Role','title'],
-                'datatable' => ['roles[].title', 'roles.title'],
-                'visible'   => 'ice',
-            ],
-            [
                 'name'      => 'type',
                 'type'      => 'select',
                 'data'      => ['user' => trans('user::panel.user'), 'admin' => trans('user::panel.admin')],
