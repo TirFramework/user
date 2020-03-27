@@ -44,7 +44,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
     /**
      * Send a password reset email to the user
      */
@@ -96,38 +95,49 @@ class User extends Authenticatable
             [
                 'name'      => 'name',
                 'type'      => 'text',
+                'validation'=> 'minlength="2" required',
+                'col'       => 'col-md-6 col-12',
                 'visible'   => 'ice'
             ],
             [
                 'name'      => 'email',
-                'type'      => 'text',
+                'type'      => 'email',
+                'validation'=> 'required',
                 'visible'   => 'ice'
             ],
             [
                 'name'      => 'mobile',
-                'type'      => 'text',
+                'type'      => 'number',
+                'validation'=> 'minlength="9" required',
                 'visible'   => 'ice'
             ],
             [
                 'name'      => 'password',
                 'type'      => 'password',
+                'validation' => 'required',
                 'visible'   => 'ce',
             ],
             [
                 'name'      => 'type',
                 'type'      => 'select',
+                'validation'=> 'required',
+                'placeholder'=> 'select type',
                 'data'      => ['user' => trans('user::panel.user'), 'admin' => trans('user::panel.admin')],
                 'visible'   => 'icef'
             ],
             [
                 'name'      => 'status',
                 'type'      => 'select',
+                'validation' => 'required',
+                // 'placeholder'=> 'select status',
                 'data'      => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
                 'visible'   => 'icef'
             ],
             [
                 'name'      => 'email_verified_at',
                 'type'      => 'date',
+                // 'lang'      => 'fa',
+                // 'startDay'  => 6,
                 'visible'   => 'ice'
             ],
 
