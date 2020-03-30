@@ -96,6 +96,7 @@ class User extends Authenticatable
                 'name'      => 'name',
                 'type'      => 'text',
                 'validation'=> 'minlength="2" required',
+                'placeholder'=> 'Please enter your name',
                 'col'       => 'col-md-6 col-12',
                 'visible'   => 'ice'
             ],
