@@ -20,14 +20,80 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->integer('user_id');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('type')->default('user');
+            $table->text('permissions')->nullable();
+            $table->datetime('last_login')->nullable();
             $table->enum('status', ['disabled', 'enabled'])->default('enabled');
             $table->string('api_token', 60)->nullable()->unique();
-            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('permissions')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('role_translations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('role_id')->unsigned();
+            $table->string('locale');
+            $table->string('name');
+
+            $table->unique(['role_id', 'locale']);
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+        });
+
+        Schema::create('user_roles', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->integer('role_id')->unsigned();
+            $table->timestamps();
+
+            $table->primary(['user_id', 'role_id']);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+        });
+
+        Schema::create('activations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->string('code');
+            $table->boolean('completed')->default(false);
+            $table->datetime('completed_at')->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('persistences', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('code')->unique();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('reminders', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('code');
+            $table->boolean('completed')->default(false);
+            $table->datetime('completed_at')->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        Schema::create('throttle', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('type');
+            $table->string('ip')->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         //this trigger use for assign user_id = id for own user
@@ -51,6 +117,13 @@ class CreateUsersTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('throttle');
+        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('persistences');
+        Schema::dropIfExists('activations');
+        Schema::dropIfExists('user_roles');
+        Schema::dropIfExists('role_translations');
+        Schema::dropIfExists('roles');
         Schema::dropIfExists('users');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 

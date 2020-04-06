@@ -6,6 +6,7 @@ namespace Tir\User;
 use Tir\User\Middlewares\IsAdmin;
 use Illuminate\Support\ServiceProvider;
 use Tir\User\Console\UserMigrateCommand;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,13 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $credentials = [
+            'email'    => 'admin@tir.local',
+            'password' => '123456',
+        ];
+
+        Sentinel::authenticate($credentials);
+
         $this->loadRoutesFrom(__DIR__.'/Routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');

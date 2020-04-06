@@ -1,19 +1,19 @@
 <?php
 
-namespace Tir\User\Models;
+namespace Tir\User\Entities;
 
-use Illuminate\Notifications\Notifiable;
+use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Modules\User\Notifications\MailResetPasswordToken;
-use App\Modules\User\Notifications\VerifyEmail;
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 
-class User extends Authenticatable
+class User extends EloquentUser implements AuthenticatableContract
 {
-    use Notifiable;
     use SoftDeletes;
+    use Authenticatable;
+
 
     //Additional trait insert here
 
@@ -24,33 +24,21 @@ class User extends Authenticatable
      */
     public $table = "users";
 
-
     /**
-     * The attributes that are mass assignable.
+     * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'status', 'email', 'password', 'type','email_verified_at', 'mobile'
-    ];
+    protected $dates = ['last_login'];
 
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    /**
-     * Send a password reset email to the user
-     */
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new MailResetPasswordToken($token));
-    }
+
+
+
+
+
+
 
     //this function generate option for action select in header panel
     public function getActions()
@@ -117,14 +105,6 @@ class User extends Authenticatable
                 'type'      => 'password',
                 'validation' => 'required',
                 'visible'   => 'ce',
-            ],
-            [
-                'name'      => 'type',
-                'type'      => 'select',
-                'validation'=> 'required',
-                'placeholder'=> 'select type',
-                'data'      => ['user' => trans('user::panel.user'), 'admin' => trans('user::panel.admin')],
-                'visible'   => 'icef'
             ],
             [
                 'name'      => 'status',
