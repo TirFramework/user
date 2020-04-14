@@ -40,6 +40,8 @@ class UserServiceProvider extends ServiceProvider
 
         Sentinel::authenticate($credentials);
 
+        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
+
         $this->loadRoutesFrom(__DIR__.'/Routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
