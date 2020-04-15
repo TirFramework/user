@@ -8,7 +8,7 @@ use Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class IsAdmin
+class IsUser
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class IsAdmin
         if (Sentinel::check()) {
             return $next($request);
         }
-        return Redirect::to(route('adminLogin'));
+            return Redirect::to(route('login'));
     }
 
 }

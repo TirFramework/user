@@ -6,9 +6,8 @@ use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Closure;
 use Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
-class IsAdmin
+class IsGuest
 {
     /**
      * Handle an incoming request.
@@ -20,9 +19,9 @@ class IsAdmin
     public function handle($request, Closure $next)
     {
         if (Sentinel::check()) {
-            return $next($request);
+            return redirect()->guest('/');
         }
-        return Redirect::to(route('adminLogin'));
+        return $next($request);
     }
 
 }

@@ -7,6 +7,8 @@ use Tir\User\Middlewares\IsAdmin;
 use Illuminate\Support\ServiceProvider;
 use Tir\User\Console\UserMigrateCommand;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Tir\User\Middlewares\IsGuest;
+use Tir\User\Middlewares\IsUser;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,8 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['router']->aliasMiddleware('IsAdmin', IsAdmin::class);
+        $this->app['router']->aliasMiddleware('IsUser',  IsUser::class);
+        $this->app['router']->aliasMiddleware('IsGuest', IsGuest::class);
 
 
         $this->commands([
@@ -33,16 +37,10 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $credentials = [
-            'email'    => 'admin@tir.local',
-            'password' => '123456',
-        ];
-
-        Sentinel::authenticate($credentials);
+        $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
 
         $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
 
-        $this->loadRoutesFrom(__DIR__.'/Routes/web.php');
 
         $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
 
