@@ -34,25 +34,20 @@ class User extends EloquentUser implements AuthenticatableContract
     protected $dates = ['last_login'];
 
 
-
-
     //this function generate option for action select in header panel
     public function getActions()
     {
         $actions = [
             'index' =>
-            [
-                'published' => trans('crud::panel.publish'),
-                'unpublished' => trans('crud::panel.unpublish'),
-                'draft' => trans('crud::panel.draft'),
-                'delete' => trans('crud::panel.delete'),
-            ],
+                [
+                    'delete' => trans('crud::panel.delete'),
+                ],
 
             'trash' =>
-            [
-                'restore' => trans('panel.restore'),
-                'fullDelete' => trans('panel.full_delete'),
-            ],
+                [
+                    'restore'    => trans('panel.restore'),
+                    'fullDelete' => trans('panel.full_delete'),
+                ],
         ];
         return $actions;
     }
@@ -61,7 +56,7 @@ class User extends EloquentUser implements AuthenticatableContract
     {
         return [
             'status' => 'required',
-            'email' => "required|unique:users,email,$this->id",
+            'email'  => "required|unique:users,email,$this->id",
         ];
     }
 
@@ -70,61 +65,53 @@ class User extends EloquentUser implements AuthenticatableContract
     {
         $fields = [
             [
-                'name' => 'base-information',
-                'type' => 'group',
+                'name'    => 'base-information',
+                'type'    => 'group',
                 'visible' => 'ce',
-                'tabs' => [
+                'tabs'    => [
                     [
-                        'name' => 'general',
-                        'type' => 'tab',
+                        'name'    => 'user-information',
+                        'type'    => 'tab',
                         'visible' => 'ce',
-                        'fields' =>[
+                        'fields'  => [
                             [
-                                'name'       => 'id',
+                                'name'    => 'id',
+                                'type'    => 'text',
+                                'visible' => 'io',
+                            ],
+                            [
+                                'name'       => 'name',
                                 'type'       => 'text',
-                                'visible'    => 'io',
+                                'validation' => 'minlength="2" required',
+                                'visible'    => 'ice'
                             ],
                             [
-                                'name'      => 'name',
-                                'type'      => 'text',
-                                'validation'=> 'minlength="2" required',
-                                'placeholder'=> 'Please enter your name',
-                                'col'       => 'col-md-6 col-12',
-                                'visible'   => 'ice'
-                            ],
-                            [
-                                'name'      => 'email',
-                                'type'      => 'email',
-                                'validation'=> 'required',
-                                'visible'   => 'ice'
-                            ],
-                            [
-                                'name'      => 'mobile',
-                                'type'      => 'number',
-                                'validation'=> 'minlength="9" required',
-                                'visible'   => 'ice'
-                            ],
-                            [
-                                'name'      => 'password',
-                                'type'      => 'password',
+                                'name'       => 'email',
+                                'type'       => 'email',
                                 'validation' => 'required',
-                                'visible'   => 'ce',
+                                'visible'    => 'ice'
                             ],
                             [
-                                'name'      => 'status',
-                                'type'      => 'select',
+                                'name'       => 'mobile',
+                                'type'       => 'number',
+                                'validation' => 'minlength="9" required',
+                                'visible'    => 'ice'
+                            ],
+                            [
+                                'name'       => 'password',
+                                'type'       => 'password',
+                                'validation' => 'required',
+                                'visible'    => 'ce',
+                            ],
+                            [
+                                'name'       => 'status',
+                                'type'       => 'select',
                                 'validation' => 'required',
                                 // 'placeholder'=> 'select status',
-                                'data'      => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
-                                'visible'   => 'icef'
-                            ],
-                            [
-                                'name'      => 'email_verified_at',
-                                'type'      => 'date',
-                                // 'lang'      => 'fa',
-                                // 'startDay'  => 6,
-                                'visible'   => 'ice'
+                                'data'       => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
+                                'visible'    => 'icef'
                             ]
+
                         ]
                     ]
                 ]
