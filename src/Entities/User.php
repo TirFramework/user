@@ -26,6 +26,13 @@ class User extends EloquentUser implements AuthenticatableContract
 
     public $translatedAttributes = [];
 
+    protected $fillable = [
+        'email',
+        'password',
+        'name',
+        'permissions',
+    ];
+
     /**
      * The attributes that should be mutated to dates.
      *
