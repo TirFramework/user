@@ -24,6 +24,8 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     public $table = "users";
 
+    public static $routeName = 'user';
+
     public $translatedAttributes = [];
 
     protected $fillable = [
