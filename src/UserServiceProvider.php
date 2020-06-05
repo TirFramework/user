@@ -3,6 +3,10 @@
 namespace Tir\User;
 
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
+use Tir\User\Contracts\Authentication;
+use Tir\User\Sentinel\SentinelAuthentication;
 use Tir\User\Middlewares\IsAdmin;
 use Illuminate\Support\ServiceProvider;
 use Tir\User\Console\UserMigrateCommand;
@@ -12,6 +16,31 @@ use Tir\User\Middlewares\IsUser;
 
 class UserServiceProvider extends ServiceProvider
 {
+
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (! config('app.installed')) {
+            return;
+        }
+
+        $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
+
+        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
+        $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
+
+        $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
+
+        $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
+
+    }
+
+
     /**
      * Register any application services.
      *
@@ -28,23 +57,45 @@ class UserServiceProvider extends ServiceProvider
         $this->commands([
             UserMigrateCommand::class
         ]);
+
+        $this->app->bind(Authentication::class, SentinelAuthentication::class);
+
     }
 
     /**
-     * Bootstrap any application services.
+     * Register sentinel guard.
      *
      * @return void
      */
-    public function boot()
+    private function registerSentinelGuard()
     {
-        $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
-
-        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
-        $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
-
-        $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
-
-        $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
-
+        Auth::extend('sentinel', function () {
+            return new \Tir\User\Guards\Sentinel;
+        });
     }
+
+    /**
+     * Register blade directives.
+     *
+     * @return void
+     */
+    private function registerBladeDirectives()
+    {
+        Blade::directive('hasAccess', function ($permissions) {
+            return "<?php if (\$currentUser->hasAccess($permissions)) : ?>";
+        });
+
+        Blade::directive('endHasAccess', function () {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('hasAnyAccess', function ($permissions) {
+            return "<?php if (\$currentUser->hasAnyAccess($permissions)) : ?>";
+        });
+
+        Blade::directive('endHasAnyAccess', function () {
+            return '<?php endif; ?>';
+        });
+    }
+
 }
