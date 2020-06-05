@@ -15,12 +15,12 @@
 Route::group(['middleware' => 'web'], function () {
 
     //admin login form
-    Route::get('/admin/login', 'Tir\User\Controllers\Auth\LoginController@showAdminLoginForm')->name('adminLogin');
+    Route::get('/admin/login', 'Tir\User\Controllers\Auth\Admin\AdminLoginController@showAdminLoginForm')->name('adminLogin');
 
-    Route::post('/admin/login', 'Tir\User\Controllers\Auth\LoginController@authentication')->name('authentication');
+    Route::post('/admin/login', 'Tir\User\Controllers\Auth\Admin\AdminLoginController@authentication')->name('authentication');
 
     //TODO::change to post method
-    Route::get('/user/logout', 'Tir\User\Controllers\Auth\LogoutController@logout')->name('logout');
+    Route::get('/user/logout', 'Tir\User\Controllers\Auth\Admin\AdminLogoutController@logout')->name('logout');
 
 });
 

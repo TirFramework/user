@@ -1,6 +1,6 @@
 <?php
 
-namespace Tir\User\Controllers\Auth;
+namespace Tir\User\Controllers\AdminAuth;
 
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller ;
 use Illuminate\Support\Facades\Redirect;
 
 
-class LogoutController extends Controller
+class AdminLogoutController extends Controller
 {
 
 
