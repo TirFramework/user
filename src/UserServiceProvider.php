@@ -35,7 +35,6 @@ class UserServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
 
-        $this->registerSentinelGuard();
         $this->registerBladeDirectives();
     }
 
@@ -58,6 +57,7 @@ class UserServiceProvider extends ServiceProvider
         ]);
 
         $this->app->bind(Authentication::class, SentinelAuthentication::class);
+        $this->registerSentinelGuard();
 
     }
 
