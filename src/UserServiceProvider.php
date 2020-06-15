@@ -36,6 +36,7 @@ class UserServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
 
         $this->registerBladeDirectives();
+        $this->adminMenu();
     }
 
 
@@ -95,6 +96,13 @@ class UserServiceProvider extends ServiceProvider
         Blade::directive('endHasAnyAccess', function () {
             return '<?php endif; ?>';
         });
+    }
+
+    private function adminMenu()
+    {
+        $menu = resolve('AdminMenu');
+        $menu->item('system')->title('user::panel.system')->link('#')->add();
+        $menu->item('system.users')->title('user::panel.users')->route('user.index')->add();
     }
 
 }
