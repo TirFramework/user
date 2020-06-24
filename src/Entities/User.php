@@ -126,8 +126,7 @@ class User extends EloquentUser implements AuthenticatableContract
                 ]
             ]
         ];
-        return json_decode(json_encode($fields));
-    }
+        return $fields;}
 
 
 }
