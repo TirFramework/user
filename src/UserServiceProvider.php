@@ -29,12 +29,6 @@ class UserServiceProvider extends ServiceProvider
             return;
         }
 
-        $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
-        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
-        $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
-        $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
-        $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
-
         $this->registerBladeDirectives();
         $this->adminMenu();
     }
@@ -48,6 +42,13 @@ class UserServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
+        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
+        $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
+        $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
+        $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
+
+
         $this->app['router']->aliasMiddleware('IsAdmin', IsAdmin::class);
         $this->app['router']->aliasMiddleware('IsUser',  IsUser::class);
         $this->app['router']->aliasMiddleware('IsGuest', IsGuest::class);
