@@ -29,6 +29,8 @@ class User extends EloquentUser implements AuthenticatableContract
     public $translatedAttributes = [];
 
     protected $fillable = [
+        'first_name',
+        'last_name',
         'email',
         'password',
         'name',
