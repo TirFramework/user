@@ -29,6 +29,8 @@ class UserServiceProvider extends ServiceProvider
             return;
         }
 
+        $this->registerSentinelGuard();
+
         $this->registerBladeDirectives();
         $this->adminMenu();
     }
@@ -59,7 +61,6 @@ class UserServiceProvider extends ServiceProvider
         ]);
 
         $this->app->bind(Authentication::class, SentinelAuthentication::class);
-        $this->registerSentinelGuard();
 
     }
 

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Tir\Store\Order\Entities\Order;
+use Tir\Store\Review\Entities\Review;
 
 
 class User extends EloquentUser implements AuthenticatableContract
@@ -74,7 +76,7 @@ class User extends EloquentUser implements AuthenticatableContract
 
     public function getFields()
     {
-        $fields = [
+        return [
             [
                 'name'    => 'base-information',
                 'type'    => 'group',
@@ -128,7 +130,42 @@ class User extends EloquentUser implements AuthenticatableContract
                 ]
             ]
         ];
-        return $fields;}
+    }
+    //Relations ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the orders of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id');
+    }
 
+    /**
+     * Get the reviews of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    //Additional Methods //////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Get the recent orders of the user.
+     *
+     * @param int $take
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function recentOrders($take)
+    {
+        return $this->orders()->latest()->take($take)->get();
+    }
 
 }
+
+
+
