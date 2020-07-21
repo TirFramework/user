@@ -46,6 +46,7 @@ class UserServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/Routes/auth.php');
         $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
+        $this->loadRoutesFrom(__DIR__.'/Routes/public.php');
         $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
         $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');

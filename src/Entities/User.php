@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Tir\Crud\Support\Eloquent\HasDynamicRelation;
 use Tir\Store\Order\Entities\Order;
 use Tir\Store\Review\Entities\Review;
 
@@ -15,6 +16,7 @@ class User extends EloquentUser implements AuthenticatableContract
 {
     use SoftDeletes;
     use Authenticatable;
+    use HasDynamicRelation;
 
 
     //Additional trait insert here
@@ -163,6 +165,16 @@ class User extends EloquentUser implements AuthenticatableContract
     public function recentOrders($take)
     {
         return $this->orders()->latest()->take($take)->get();
+    }
+
+    /**
+     * Login the user.
+     *
+     * @return $this|bool
+     */
+    public function login()
+    {
+        return auth()->login($this);
     }
 
 }
