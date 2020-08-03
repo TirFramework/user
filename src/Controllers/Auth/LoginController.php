@@ -4,8 +4,9 @@ namespace Tir\User\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\View;
+
+use Auth;
 
 class LoginController extends Controller
 {
@@ -20,7 +21,6 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -42,7 +42,42 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view(config('crud.front-template').'::pages.auth.login');
+    }
+
+
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return Response
+     */
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+
+        if (Auth::attempt($credentials)) {
+
+            // Authentication passed...
+            if(isset($request->adminLoginForm)){
+                return redirect()->route('dashboard');
+            } else{
+
+                return redirect()->to( $redirectTo );
+            }
+        }else{
+            return redirect()->back();
+        }
+    }
+
+
+    
+    public function showAdminLoginForm()
+    {
+        return view(config('crud.admin-panel').'::pages.login');
     }
 
 

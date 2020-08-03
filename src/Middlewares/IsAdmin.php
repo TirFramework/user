@@ -22,7 +22,7 @@ class IsAdmin
                 return abort('403');
             }
         } else {
-            return redirect(route('login'));
+            return redirect(route('admin.login'));
         }
         return $next($request);
     }

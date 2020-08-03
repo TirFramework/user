@@ -32,7 +32,11 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/Routes/web.php');
+        if (! config('app.installed')) {
+            return;
+        }
+        $this->loadRoutesFrom(__DIR__.'/Routes/public.php');
+        $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
 
         $this->loadMigrationsFrom(__DIR__ .'/Database/Migrations');
 
@@ -40,5 +44,19 @@ class UserServiceProvider extends ServiceProvider
 
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
 
+        $this->adminMenu();
+    }
+
+    /**
+     * Add menu.
+     *
+     * @return void
+     */
+    private function adminMenu()
+    {
+        $menu = resolve('AdminMenu');
+        $menu->item('system')->title('user::panel.system')->link('#')->add();
+        $menu->item('system.users')->title('user::panel.users')->link('#')->add();
+        $menu->item('system.users.user')->title('user::panel.user')->route('user.index')->add();
     }
 }
