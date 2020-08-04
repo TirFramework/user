@@ -101,6 +101,16 @@ class User extends EloquentUser implements AuthenticatableContract
                                 'visible'    => 'ice'
                             ],
                             [
+                                'name'       => 'first_name',
+                                'type'       => 'text',
+                                'visible'    => 'ice'
+                            ],
+                            [
+                                'name'       => 'last_name',
+                                'type'       => 'text',
+                                'visible'    => 'ice'
+                            ],
+                            [
                                 'name'       => 'email',
                                 'type'       => 'email',
                                 'validation' => 'required',
