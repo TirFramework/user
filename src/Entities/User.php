@@ -17,6 +17,15 @@ class User extends Authenticatable
 
     //Additional trait insert here
 
+
+    /**
+     * The attribute show route name
+     * and we use in fieldTypes and controllers
+     *
+     * @var string
+     */
+    public static $routeName = 'user';
+
     /**
      * The attribute select which table used for this model
      *
@@ -140,5 +149,12 @@ class User extends Authenticatable
             ]
         ];
     }
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    public $translatedAttributes = [];
 
 }
