@@ -2,6 +2,7 @@
 
 namespace Tir\User\Controllers;
 
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tir\User\Entities\User;
@@ -17,6 +18,13 @@ class AdminUserController extends CrudController
         $password = Hash::make($request->input('password'));
         $request->merge(['password'=> $password]);
         return $request;
+    }
+
+    public function saveAdditional(Request $request, $item)
+    {
+         $activation = Activation::create($item);
+         Activation::complete($item,  $activation->code);
+
     }
 
     public function updateRequestManipulation(Request $request)

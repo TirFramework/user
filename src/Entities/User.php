@@ -37,6 +37,7 @@ class User extends EloquentUser implements AuthenticatableContract
         'last_name',
         'email',
         'password',
+        'type',
         'name',
         'permissions',
     ];
@@ -70,7 +71,6 @@ class User extends EloquentUser implements AuthenticatableContract
     public function getValidation()
     {
         return [
-            'status' => 'required',
             'email'  => "required|unique:users,email,$this->id",
         ];
     }
@@ -129,13 +129,21 @@ class User extends EloquentUser implements AuthenticatableContract
                                 'visible'    => 'ce',
                             ],
                             [
-                                'name'       => 'status',
+                                'name'       => 'type',
                                 'type'       => 'select',
                                 'validation' => 'required',
                                 // 'placeholder'=> 'select status',
-                                'data'       => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
+                                'data'       => ['admin' => 'admin', 'user' => 'user'],
                                 'visible'    => 'icef'
-                            ]
+                            ],
+//                            [
+//                                'name'       => 'status',
+//                                'type'       => 'select',
+//                                'validation' => 'required',
+//                                // 'placeholder'=> 'select status',
+//                                'data'       => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
+//                                'visible'    => 'icef'
+//                            ]
 
                         ]
                     ]

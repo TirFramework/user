@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->text('permissions')->nullable();
             $table->datetime('last_login')->nullable();
+            $table->enum('type', ['admin', 'user'])->default('user');
             $table->enum('status', ['disabled', 'enabled'])->default('enabled');
             $table->string('api_token', 60)->nullable()->unique();
             $table->timestamps();
