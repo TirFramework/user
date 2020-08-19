@@ -2,7 +2,8 @@
 
 namespace Tir\User\Http\Requests;
 
-use Modules\Core\Http\Requests\Request;
+
+use Tir\Store\Support\Request;
 
 class SaveRoleRequest extends Request
 {

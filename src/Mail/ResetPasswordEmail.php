@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Tir\Crud\Support\Facades\Crud;
 use Tir\Setting\Facades\Stg;
 
 class ResetPasswordEmail extends Mailable implements ShouldQueue
@@ -48,7 +49,7 @@ class ResetPasswordEmail extends Mailable implements ShouldQueue
     public function build()
     {
         return $this->subject(trans('user::mail.reset_your_account_password'))
-            ->view("emails.{$this->getViewName()}", [
+            ->view(config('crud.front-template')."::emails.{$this->getViewName()}", [
                 'logo' => Stg::get('storefront_mail_logo'),
             ]);
     }

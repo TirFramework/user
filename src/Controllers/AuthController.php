@@ -37,6 +37,7 @@ class AuthController extends BaseAuthController
      */
     public function getLogin()
     {
+        dd('test');
         return view(config('crud.front-template').'::public.auth.login');
     }
 
@@ -133,7 +134,7 @@ class AuthController extends BaseAuthController
      */
     protected function resetCompleteRoute($user, $code)
     {
-        return route(config('crud.front-template').'::reset.complete', [$user->email, $code]);
+        return route('reset.complete', [$user->email, $code]);
     }
 
     /**

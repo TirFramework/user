@@ -19,7 +19,7 @@ class IsGuest
     public function handle($request, Closure $next)
     {
         if (Sentinel::check()) {
-            return redirect()->guest('/');
+            return redirect()->guest('/account');
         }
         return $next($request);
     }

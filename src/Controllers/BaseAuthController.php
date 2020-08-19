@@ -33,7 +33,7 @@ abstract class BaseAuthController extends Controller
     {
         $this->auth = $auth;
 
-        $this->middleware('guest')->except('getLogout');
+        $this->middleware('IsGuest')->except('getLogout');
     }
 
     /**

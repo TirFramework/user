@@ -3,7 +3,7 @@
 namespace Tir\User\Http\Requests;
 
 use Illuminate\Validation\Rule;
-use Modules\Core\Http\Requests\Request;
+use Tir\Store\Support\Request;
 
 class SaveUserRequest extends Request
 {
