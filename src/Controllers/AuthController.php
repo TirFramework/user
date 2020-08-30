@@ -37,7 +37,6 @@ class AuthController extends BaseAuthController
      */
     public function getLogin()
     {
-        dd('test');
         return view(config('crud.front-template').'::public.auth.login');
     }
 
