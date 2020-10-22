@@ -89,7 +89,7 @@ abstract class BaseAuthController extends Controller
                 ->withError(trans('user::messages.users.account_not_activated'));
         } catch (ThrottlingException $e) {
             return back()->withInput()
-                ->withError(trans('user::messages.users.account_is_blocked', ['delay' => intl_number($e->getDelay())]));
+                ->withError(trans('user::messages.users.account_is_blocked', ['delay' => $e->getDelay()]));
         }
     }
 
