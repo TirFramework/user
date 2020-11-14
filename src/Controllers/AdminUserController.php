@@ -14,9 +14,11 @@ class AdminUserController extends CrudController
 
     public function storeRequestManipulation(Request $request)
     {
-        //password hashed
-        $password = Hash::make($request->input('password'));
-        $request->merge(['password'=> $password]);
+        if($request->input('password')){
+            //password hashed
+            $password = Hash::make($request->input('password'));
+            $request->merge(['password'=> $password]);
+        }
         return $request;
     }
 
