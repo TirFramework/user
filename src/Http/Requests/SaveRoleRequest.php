@@ -25,4 +25,14 @@ class SaveRoleRequest extends Request
             'name' => 'required',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }

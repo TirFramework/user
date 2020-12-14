@@ -26,4 +26,14 @@ class ResetCompleteRequest extends Request
             'new_password_confirmation' => 'required',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }

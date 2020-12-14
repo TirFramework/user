@@ -25,4 +25,14 @@ class PasswordResetRequest extends Request
             'email' => 'required|email',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }

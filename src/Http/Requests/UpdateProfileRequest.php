@@ -30,4 +30,14 @@ class UpdateProfileRequest extends Request
             'password' => 'confirmed',
         ];
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }

@@ -15,7 +15,7 @@ return [
     'i_remembered_my_password' => 'من گذرواژه خودم را به یاد دارم',
     'register' => 'ثبت نام ',
     'first_name' => 'نام',
-    'last_name' => 'نام خانوادگش',
+    'last_name' => 'نام خانوادگی',
     'password_confirmation' => 'تایید گذرواژه',
     'i_agree_to_the' => 'من موافقم با',
     'privacy_policy' => 'قوانین و مقررات',

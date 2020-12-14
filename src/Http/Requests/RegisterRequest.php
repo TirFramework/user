@@ -31,4 +31,15 @@ class RegisterRequest extends Request
             'privacy_policy' => 'accepted',
         ];
     }
+
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }

@@ -42,4 +42,14 @@ class SaveUserRequest extends Request
 
         return $rule;
     }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [];
+    }
 }
