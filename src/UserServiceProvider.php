@@ -6,6 +6,7 @@ namespace Tir\User;
 use Tir\User\Middlewares\IsAdmin;
 use Illuminate\Support\ServiceProvider;
 use Tir\User\Console\UserMigrateCommand;
+use Tir\User\Providers\SeedServiceProvider;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -18,11 +19,6 @@ class UserServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['router']->aliasMiddleware('IsAdmin', IsAdmin::class);
-
-
-        $this->commands([
-            UserMigrateCommand::class
-        ]);
     }
 
     /**
@@ -32,9 +28,9 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! config('app.installed')) {
-            return;
-        }
+//        if (! config('app.installed')) {
+//            return;
+//        }
         $this->loadRoutesFrom(__DIR__.'/Routes/public.php');
         $this->loadRoutesFrom(__DIR__.'/Routes/admin.php');
 
@@ -43,6 +39,8 @@ class UserServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/Resources/Views', 'user');
 
         $this->loadTranslationsFrom(__DIR__.'/Resources/Lang/', 'user');
+
+        $this->app->register(SeedServiceProvider::class);
 
         $this->adminMenu();
     }

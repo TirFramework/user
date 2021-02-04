@@ -8,14 +8,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Modules\User\Notifications\MailResetPasswordToken;
 use App\Modules\User\Notifications\VerifyEmail;
+use Tir\Crud\Support\Scaffold\CrudScaffold;
 
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-
-    //Additional trait insert here
+    use CrudScaffold;
 
 
     /**

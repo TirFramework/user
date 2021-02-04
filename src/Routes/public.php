@@ -14,7 +14,6 @@
 // Add web middleware for use Laravel feature
 Route::group(['middleware' => 'web'], function () {
 
-    
 
     Route::group(['prefix' => 'user','namespace'=>'Tir\User\Controllers\Auth', 'middleware' => 'web'], function () {
             // Authentication Routes...
