@@ -42,7 +42,7 @@ class UserServiceProvider extends ServiceProvider
 
         $this->app->register(SeedServiceProvider::class);
 
-        $this->adminMenu();
+       // $this->adminMenu();
     }
 
     /**

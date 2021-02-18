@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@tir.loc',
             'password' => bcrypt('123456'),
+            'type' => 'admin',
             'status' => 'enabled',
         ]);
 
