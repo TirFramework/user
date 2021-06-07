@@ -2,37 +2,25 @@
 
 namespace Tir\User\Entities;
 
-use Illuminate\Notifications\Notifiable;
+//use App\Modules\User\Notifications\MailResetPasswordToken;
+//use App\Modules\User\Notifications\VerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Modules\User\Notifications\MailResetPasswordToken;
-use App\Modules\User\Notifications\VerifyEmail;
-use Tir\Crud\Support\Scaffold\CrudScaffold;
+use Illuminate\Notifications\Notifiable;
+use Tir\Authorization\Entities\Role;
+use Tir\Crud\Support\Eloquent\HasDynamicRelation;
+use Tir\Crud\Support\Scaffold\BaseScaffold;
+use Tir\Crud\Support\Scaffold\Fields\Select;
+use Tir\Crud\Support\Scaffold\Fields\Text;
 
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-    use CrudScaffold;
-
-
-    /**
-     * The attribute show route name
-     * and we use in fieldTypes and controllers
-     *
-     * @var string
-     */
-    public static $routeName = 'user';
-
-    /**
-     * The attribute select which table used for this model
-     *
-     * @var string
-     */
-    public $table = "users";
-
+    use BaseScaffold;
+    use HasDynamicRelation;
 
     /**
      * The attributes that are mass assignable.
@@ -40,9 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'status', 'email', 'password', 'type','email_verified_at', 'mobile'
+        'name', 'status', 'email', 'password', 'type', 'email_verified_at', 'mobile', 'user_id'
     ];
-
 
     /**
      * The attributes that should be cast to native types.
@@ -61,100 +48,29 @@ class User extends Authenticatable
         $this->notify(new MailResetPasswordToken($token));
     }
 
-    //this function generate option for action select in header panel
-    public function getActions()
-    {
-        $actions = [
-            'index' =>
-            [
-                'published' => trans('crud::panel.publish'),
-                'unpublished' => trans('crud::panel.unpublish'),
-                'draft' => trans('crud::panel.draft'),
-                'delete' => trans('crud::panel.delete'),
-            ],
 
-            'trash' =>
-            [
-                'restore' => trans('panel.restore'),
-                'fullDelete' => trans('panel.full_delete'),
-            ],
-        ];
-        return $actions;
+    public function roles(): belongsToMany
+    {
+        return $this->belongsToMany(Role::class);
     }
 
-    public function getValidation()
+    protected function setModuleName(): string
+    {
+        return 'user';
+    }
+
+    protected function setFields(): array
     {
         return [
-            'type' => 'required',
-            'status' => 'required',
-            'password' => 'required',
-            'email' => "required|unique:users,email,$this->id",
+            Text::make('name')->rules('required'),
+            Text::make('email')->rules('required', 'unique:users,email,{{itemId}}'),
+            Text::make('password')->rules('required')->onlyOnCreating(),
+            Text::make('path'),
+            Select::make('type')
+                ->data(['Admin' => 'admin', 'User' => 'user']),
         ];
+
     }
 
-
-    public function getFields()
-    {
-        return [
-            [
-                'name'    => 'base-information',
-                'type'    => 'group',
-                'visible' => 'ce',
-                'tabs'    => [
-                    [
-                        'name'    => 'user-information',
-                        'type'    => 'tab',
-                        'visible' => 'ce',
-                        'fields'  => [
-                            [
-                                'name'    => 'id',
-                                'type'    => 'text',
-                                'visible' => 'io',
-                            ],
-                            [
-                                'name'       => 'name',
-                                'type'       => 'text',
-                                'validation' => 'minlength="2" required',
-                                'visible'    => 'ice'
-                            ],
-                            [
-                                'name'       => 'email',
-                                'type'       => 'email',
-                                'validation' => 'required',
-                                'visible'    => 'ice'
-                            ],
-                            [
-                                'name'       => 'email_verified_at',
-                                'type'       => 'date',
-                                'visible'    => 'ice'
-                            ],
-                            [
-                                'name'       => 'password',
-                                'type'       => 'password',
-                                'validation' => 'required',
-                                'visible'    => 'ce',
-                            ],
-                            [
-                                'name'       => 'status',
-                                'type'       => 'select',
-                                'validation' => 'required',
-                                // 'placeholder'=> 'select status',
-                                'data'       => ['enabled' => trans('user::panel.enabled'), 'disabled' => trans('user::panel.disabled')],
-                                'visible'    => 'icef'
-                            ]
-
-                        ]
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * The attributes that are translatable.
-     *
-     * @var array
-     */
-    public $translatedAttributes = [];
 
 }
