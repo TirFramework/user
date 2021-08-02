@@ -63,9 +63,8 @@ class User extends Authenticatable
     {
         return [
             Text::make('name')->rules('required'),
-            Text::make('email')->rules('required', 'unique:users,email,{{itemId}}'),
-            Text::make('password')->rules('required')->onlyOnCreating(),
-            Text::make('path'),
+            Text::make('email')->rules('required', 'unique:users,email,' . $this->id),
+            Text::make('password')->creationRules('required')->onlyOnCreating(),
             Select::make('type')
                 ->data(['Admin' => 'admin', 'User' => 'user']),
         ];
