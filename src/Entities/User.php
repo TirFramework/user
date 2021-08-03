@@ -10,16 +10,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tir\Authorization\Entities\Role;
 use Tir\Crud\Support\Eloquent\HasDynamicRelation;
-use Tir\Crud\Support\Scaffold\BaseScaffold;
-use Tir\Crud\Support\Scaffold\Fields\Select;
-use Tir\Crud\Support\Scaffold\Fields\Text;
+use Tir\User\Scaffold\UserScaffold;
 
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-    use BaseScaffold;
+    use UserScaffold;
     use HasDynamicRelation;
 
     /**
@@ -30,6 +28,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'status', 'email', 'password', 'type', 'email_verified_at', 'mobile', 'user_id'
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     /**
      * The attributes that should be cast to native types.
@@ -54,22 +57,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    protected function setModuleName(): string
-    {
-        return 'user';
-    }
-
-    protected function setFields(): array
-    {
-        return [
-            Text::make('name')->rules('required'),
-            Text::make('email')->rules('required', 'unique:users,email,' . $this->id),
-            Text::make('password')->creationRules('required')->onlyOnCreating(),
-            Select::make('type')
-                ->data(['Admin' => 'admin', 'User' => 'user']),
-        ];
-
-    }
 
 
 }
