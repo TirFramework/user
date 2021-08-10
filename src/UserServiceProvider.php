@@ -6,7 +6,7 @@ namespace Tir\User;
 use Illuminate\Support\ServiceProvider;
 use Tir\Crud\Support\Module\Module;
 use Tir\Crud\Support\Module\Modules;
-use Tir\User\Console\UserMigrateCommand;
+use Tir\User\Database\Seeders\DatabaseSeeder;
 use Tir\User\Middlewares\IsAdmin;
 use Tir\User\Providers\SeedServiceProvider;
 
@@ -65,7 +65,9 @@ class UserServiceProvider extends ServiceProvider
     {
         $user = new Module();
         $user->setName('user');
+        $user->setSeeders([DatabaseSeeder::class]);
         $user->enable();
+
         Modules::register($user);
     }
 }
