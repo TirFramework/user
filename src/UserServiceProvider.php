@@ -6,7 +6,6 @@ namespace Tir\User;
 use Illuminate\Support\ServiceProvider;
 use Tir\Crud\Support\Module\Module;
 use Tir\Crud\Support\Module\Modules;
-use Tir\User\Database\Seeders\DatabaseSeeder;
 use Tir\User\Middlewares\IsAdmin;
 use Tir\User\Providers\SeedServiceProvider;
 
@@ -64,10 +63,7 @@ class UserServiceProvider extends ServiceProvider
     private function registerModule()
     {
         $user = new Module();
-        $user->setName('user');
-        $user->setSeeders([DatabaseSeeder::class]);
-        $user->enable();
-
+        $user->setName('user')->enable();
         Modules::register($user);
     }
 }
