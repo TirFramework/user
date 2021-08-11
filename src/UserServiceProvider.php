@@ -65,9 +65,7 @@ class UserServiceProvider extends ServiceProvider
     {
         $user = new Module();
         $user->setName('user');
-        $user->setSeeders([DatabaseSeeder::class]);
         $user->enable();
-
         Modules::register($user);
     }
 }
