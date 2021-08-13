@@ -28,7 +28,7 @@ trait UserScaffold
             Text::make('email')->rules('required', 'unique:users,email,' . $this->id),
             Text::make('password')->updateRules('required', 'min:6')->onlyOnCreating(),
             Select::make('type')
-                ->data(['Admin' => 'admin', 'User' => 'user']),
+            ->data( [['text' => 'Admin', 'value' => 'admin'], ['text' => 'User', 'value' => 'user']] ),
         ];
 
     }
