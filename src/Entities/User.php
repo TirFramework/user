@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tir\Authorization\Entities\Role;
+use Tir\Crud\Scopes\OwnerScope;
 use Tir\Crud\Support\Eloquent\HasDynamicRelation;
 use Tir\User\Scaffold\UserScaffold;
 
@@ -28,6 +29,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'status', 'email', 'password', 'type', 'email_verified_at', 'mobile', 'user_id'
     ];
+
+    protected $hidden = array('password', 'token');
+
 
     public function setPasswordAttribute($value)
     {
