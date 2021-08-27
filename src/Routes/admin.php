@@ -14,5 +14,5 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'api/v1'], function () {
 
 });
 
-//Route::get('admin/login', 'Tir\User\Controllers\Auth\LoginController@showAdminLoginForm')->name('admin.login');
+Route::Post('api/v1/admin/login', 'Tir\User\Controllers\Auth\AdminLoginController@authenticate')->name('admin.login');
 
