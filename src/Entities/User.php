@@ -30,7 +30,7 @@ class User extends Authenticatable
         'name', 'status', 'email', 'password', 'type', 'email_verified_at', 'mobile', 'user_id'
     ];
 
-    protected $hidden = array('password', 'token');
+    protected $hidden = array('password', 'api_token','remember_token');
 
 
     public function setPasswordAttribute($value)
