@@ -16,7 +16,8 @@ class AdminLoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return Response::Json(Auth::user());
+            $user = Auth::User();
+            return Response::Json(['userData'=>$user,'api_token'=>$user->api_token]);
         }else{
             return Response::Json(false, 403);
         }
