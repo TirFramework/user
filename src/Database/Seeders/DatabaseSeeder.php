@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'user_id'   => '1',
             'name'      => 'admin',
             'email'     => 'admin@tir.loc',
+            'profile'   => 't',
             'password'  => bcrypt('123456'),
             'api_token' => 'a',
             'type'      => 'admin',
