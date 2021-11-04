@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class AdminLoginController extends Controller
 {
@@ -17,6 +18,10 @@ class AdminLoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::User();
+
+            $user->api_token = Str::random(60);
+            $user->save();
+            
             return Response::Json(['userData'=>$user,'api_token'=>$user->api_token]);
         }else{
             return Response::Json(false, 403);

@@ -30,7 +30,7 @@ trait UserScaffold
             FileUploader::make('profile')->maxCount(1)->hideFromIndex(),
             Text::make('password')->creationRules('required', 'min:6')->onlyOnCreating(),
             Select::make('type')
-            ->data( [['text' => 'Admin', 'value' => 'admin'], ['text' => 'User', 'value' => 'user']] ),
+            ->data( [['text' => 'Admin', 'value' => 'admin'], ['text' => 'User', 'value' => 'user']] )->rules('required'),
         ];
 
     }

@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Tir\User\Controllers\AdminUserController;
+use Tir\User\Controllers\Auth\AdminLoginController;
 
 // Add web middleware for use Laravel feature
 Route::group(['middleware' => 'auth:api', 'prefix' => 'api/v1'], function () {
@@ -14,5 +15,7 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'api/v1'], function () {
 
 });
 
-Route::Post('api/v1/admin/login', 'Tir\User\Controllers\Auth\AdminLoginController@authenticate')->name('admin.login');
+
+Route::Post('/api/v1/admin/login', [AdminLoginController::class, 'authenticate'])->name('admin.login');
+
 
