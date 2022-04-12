@@ -2,10 +2,13 @@
 
 namespace Tir\User\Controllers;
 
-use Tir\User\Entities\User;
 use Tir\Crud\Controllers\CrudController;
+use Tir\User\Entities\User;
 
 class AdminUserController extends CrudController
 {
-    protected $model = User::Class;
+    protected function setModel(): string
+    {
+        return User::class;
+    }
 }

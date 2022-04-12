@@ -13,33 +13,25 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::disableForeignKeyConstraints();
 
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('user_id');
             $table->string('email')->unique();
+            $table->text('profile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('type')->default('user');
             $table->enum('status', ['disabled', 'enabled'])->default('enabled');
-            $table->string('api_token', 60)->nullable()->unique();
+            $table->string('api_token', 80)->nullable()->unique()->default(null);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
 
-        //this trigger use for assign user_id = id for own user
-        //so this trigger run before insert user and get id and save value into user_id
-        DB::unprepared('
-        CREATE TRIGGER `sameUserId` BEFORE INSERT ON `users`
-             FOR EACH ROW BEGIN
-             set @nid = (SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = \'users\' and TABLE_SCHEMA = DATABASE());
-        set new.user_id = @nid;
-        END
-       ');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        Schema::enableForeignKeyConstraints();
 
     }
 
@@ -50,9 +42,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        Schema::enableForeignKeyConstraints();
+
 
     }
 }
