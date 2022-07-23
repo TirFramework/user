@@ -32,6 +32,7 @@ trait UserScaffold
             Password::make('password')->creationRules('required', 'min:6')->hideFromIndex(),
             Select::make('type')
             ->data( [['text' => 'Admin', 'value' => 'admin'], ['text' => 'User', 'value' => 'user']] )->rules('required'),
+            Select::make('roles')->relation('roles','name' )->multiple()->rules('required'),
         ];
 
     }
