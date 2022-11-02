@@ -15,7 +15,9 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'api/v1'], function () {
 
 });
 
+Route::group(['middleware' => ['api'], 'prefix' => 'api/v1'], function () {
 
-Route::Post('/api/v1/admin/login', [AdminLoginController::class, 'authenticate'])->name('admin.login');
+    Route::Post('/admin/login', [AdminLoginController::class, 'authenticate'])->name('admin.login');
 
+});
 
