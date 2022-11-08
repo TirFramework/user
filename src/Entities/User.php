@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tir\Authorization\Entities\Role;
-use Tir\Crud\Scopes\AccessLevelScope;
-use Tir\Crud\Support\Eloquent\HasAccessLevel;
 use Tir\Crud\Support\Eloquent\HasDynamicRelation;
 use Tir\User\Scaffold\UserScaffold;
 
@@ -21,7 +19,6 @@ class User extends Authenticatable
     use SoftDeletes;
     use UserScaffold;
     use HasDynamicRelation;
-    use HasAccessLevel;
     /**
      * The attributes that are mass assignable.
      *
