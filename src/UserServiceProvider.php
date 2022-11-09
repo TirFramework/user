@@ -35,7 +35,6 @@ class UserServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
 
-        $this->loadViewsFrom(__DIR__ . '/Resources/Views', 'user');
 
         $this->loadTranslationsFrom(__DIR__ . '/Resources/Lang/', 'user');
 
@@ -43,7 +42,7 @@ class UserServiceProvider extends ServiceProvider
 
         $this->registerModule();
 
-        $this->adminMenu();
+//        $this->adminMenu();
 
     }
 
