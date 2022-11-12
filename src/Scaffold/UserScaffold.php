@@ -33,6 +33,7 @@ trait UserScaffold
             Select::make('type')
             ->data( [['text' => 'Admin', 'value' => 'admin'], ['text' => 'User', 'value' => 'user']] )->rules('required'),
             Select::make('roles')->relation('roles','name' )->multiple()->rules('required'),
+            Select::make('status')->data([['label'=>'Disabled','value'=>'disabled'], ['label'=>'Enabled','value'=>'enabled']])->rules('required')
         ];
 
     }

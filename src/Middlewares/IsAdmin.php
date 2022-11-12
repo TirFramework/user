@@ -18,7 +18,8 @@ class IsAdmin
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            if(Auth::user()->type != 'admin'){
+            $user = Auth::user();
+            if($user->type != 'admin'){
                 return abort('403');
             }
         } else {

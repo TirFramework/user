@@ -18,13 +18,21 @@ class AdminLoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::User();
+            if($user->status != 'enabled'){
+                return Response::Json([
+                    'message'    => 'Your account is not enabled',
+                ], 403);
+            }
 
             $user->api_token = Str::random(60);
             $user->save();
-            
+
             return Response::Json(['userData'=>$user,'api_token'=>$user->api_token]);
         }else{
-            return Response::Json(false, 403);
+            return Response::Json([
+                'message'    => 'Username or password is not correct',
+                ]
+            , 403);
         }
     }
 
