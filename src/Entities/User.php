@@ -32,6 +32,16 @@ class User extends Authenticatable
     protected $hidden = array('password', 'api_token','remember_token');
 
 
+    public static function booted()
+    {
+        parent::boot();
+
+        static::creating(function (self $model) {
+
+            $model->user_id = auth()->id();
+        });
+    }
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
